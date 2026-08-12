@@ -2,7 +2,7 @@
 const MyApoinment = () => {
   return (
     <div>
-      
+      aponment
     </div>
   )
 }

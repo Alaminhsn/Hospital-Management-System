@@ -13,7 +13,7 @@ const App = () => {
   return (
     <>
     <Navbar />
-    <hr/>
+    <hr className="container m-auto"/>
     <Routes>
       <Route path="/" element={<Home />}/>
       <Route path="/about" element={<About/>}/>
