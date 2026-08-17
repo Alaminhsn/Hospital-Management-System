@@ -1,8 +1,13 @@
 import { useNavigate } from "react-router-dom";
-import { doctors } from "../../public/assets";
-import Footer from "../Components/Footer";
+import { specialityData } from "../../public/assets";
+import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { AppContext } from "../context/AppContext";
+
+
 const Home = () => {
   const navigate = useNavigate();
+  const {doctors}=useContext(AppContext)
 
   return (
     <>
@@ -12,7 +17,7 @@ const Home = () => {
 
           {/* Left Content */}
           <div className="w-full md:w-1/2 text-center md:text-left">
-            <h1 className="text-3xl sm:text-4xl lg:text-6xl text-white font-semibold leading-tight">
+            <h1 className="text-2xl sm:text-4xl lg:text-6xl text-white font-semibold leading-tight">
               Book appointment
               <br />
               with trusted Doctors
@@ -72,75 +77,26 @@ const Home = () => {
         </div>
 
         {/* Specialities */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8 sm:gap-10 mt-12 sm:mt-20 px-6 md:px-10 lg:px-16">
+<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8 sm:gap-10 mt-12 sm:mt-20 px-6 md:px-10 lg:px-16">
 
-          <div className="flex items-center flex-col gap-2">
-            <img
-              className="w-20 h-20 sm:w-24 sm:h-24"
-              src="/Neurologist.svg"
-              alt="Neurologist"
-            />
-            <h2 className="text-sm sm:text-base">
-              Neurologist
-            </h2>
-          </div>
+  {specialityData.map((item, index) => (
+    <Link onClick={()=>scrollTo(0,0)}
+      key={index} to={`/doctors/${item.speciality}`}
+      className="flex items-center flex-col gap-2 cursor-pointer"
+    >
+      <img
+        className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24"
+        src={item.image}
+        alt={item.speciality}
+      />
 
-          <div className="flex items-center flex-col gap-2">
-            <img
-              className="w-20 h-20 sm:w-24 sm:h-24"
-              src="/Gynecologist.svg"
-              alt="Gynecologist"
-            />
-            <h2 className="text-sm sm:text-base">
-              Gynecologist
-            </h2>
-          </div>
+      <h2 className="text-xs sm:text-sm md:text-base text-center">
+        {item.speciality}
+      </h2>
+    </Link>
+  ))}
 
-          <div className="flex items-center flex-col gap-2">
-            <img
-              className="w-20 h-20 sm:w-24 sm:h-24"
-              src="/Dermatologist.svg"
-              alt="Dermatologist"
-            />
-            <h2 className="text-sm sm:text-base">
-              Dermatologist
-            </h2>
-          </div>
-
-          <div className="flex items-center flex-col gap-2">
-            <img
-              className="w-20 h-20 sm:w-24 sm:h-24"
-              src="/General_physician.svg"
-              alt="General Physician"
-            />
-            <h2 className="text-sm sm:text-base">
-              General Physician
-            </h2>
-          </div>
-
-          <div className="flex items-center flex-col gap-2">
-            <img
-              className="w-20 h-20 sm:w-24 sm:h-24"
-              src="/Pediatricians.svg"
-              alt="Pediatricians"
-            />
-            <h2 className="text-sm sm:text-base">
-              Pediatricians
-            </h2>
-          </div>
-
-          <div className="flex items-center flex-col gap-2">
-            <img
-              className="w-20 h-20 sm:w-24 sm:h-24"
-              src="/Gastroenterologist.svg"
-              alt="Gastroenterologist"
-            />
-            <h2 className="text-sm sm:text-base">
-              Gastroenterologist
-            </h2>
-          </div>
-
-        </div>
+</div>
 
         {/* Top Doctors */}
         <div className="flex flex-col justify-center items-center text-center px-4">
@@ -159,7 +115,7 @@ const Home = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mt-10 px-6 md:px-10 lg:px-16">
 
           {doctors.slice(0, 10).map((item, index) => (
-            <div onClick={()=>{navigate("/aponment/${item._id}")}}
+            <div onClick={()=>{navigate(`/appointment/${item._id}`)}}
               key={index}
               className="border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition"
             >
@@ -200,8 +156,17 @@ const Home = () => {
           ))}
 
         </div>
-        <button  onClick={()=>{navigate('/doctors');scrollTo(0,0)}} className="bg-gray-200 cursor-pointer rounded-2xl w-40 h-10 mt-10 ml-150">More</button>
-
+       <div className="flex justify-center mt-10">
+  <button
+    onClick={() => {
+      navigate('/doctors');
+      scrollTo(0, 0);
+    }}
+    className="bg-gray-200 cursor-pointer rounded-2xl w-40 h-10 hover:bg-gray-300 transition"
+  >
+    More
+  </button>
+</div>
       </div>
       <div className="container mx-auto mt-10 px-4 sm:mt-16 md:mt-20">
   <div className="bg-[#5F6FFF] rounded-2xl overflow-hidden">
@@ -241,9 +206,8 @@ const Home = () => {
 
     </div>
   </div>
+        <hr className="border-gray-200 mt-6" />
 </div>
-      <hr className="container m-auto mt-10"/>
-      <Footer />
     </>
   );
 };
